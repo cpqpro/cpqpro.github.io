@@ -1,0 +1,125 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Configure One Prototype</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body class="Nav-1x">
+    <div id="Toolbar-Top">
+      <div id="Logo">
+        <div id="Logo-Mark"></div>
+        <div id="Logo-Type">Configure One</div>
+      </div>
+      <div id="Toolbar-Top-Right">
+        <input id="Search" placeholder="Search for anything">
+        <button id="Profile">
+          <div id="Profile-Image"></div>
+          <div id="Profile-Name">Kiana</div>
+          <i class="fas fa-angle-down"></i>
+        </button>
+      </div>
+    </div>
+    <div id="Not-Toolbar-Top">
+      <div id="Nav-Admin-Root">
+        <button class="Tab-Icon-Label" data-route="home">
+          <i class="fas fa-home"></i> Home
+        </button>
+        <button class="Tab-Icon-Label" data-route="products">
+          <i class="fas fa-cube"></i> Products
+        </button>
+        <button class="Tab-Icon-Label" data-route="items">
+          <i class="fas fa-tags"></i> Items
+        </button>
+        <button class="Tab-Icon-Label" data-route="pricing">
+          <i class="fas fa-coins"></i> Pricing
+        </button>
+        <button class="Tab-Icon-Label" data-route="quotes">
+          <i class="fas fa-file-invoice"></i> Quotes & orders
+        </button>
+        <button class="Tab-Icon-Label" data-route="users">
+          <i class="fas fa-user-friends"></i> Users
+        </button>
+        <button class="Tab-Icon-Label" data-route="tools">
+          <i class="fas fa-tools"></i> Tools
+        </button>
+        <button class="Tab-Icon-Label" data-route="queues">
+          <i class="fas fa-pallet"></i> Queues
+        </button>
+        <button class="Tab-Icon-Label" data-route="settings">
+          <i class="fas fa-sliders-h"></i> Settings
+        </button>
+      </div>
+      <div id="Page">
+        <div id="Nav-Admin-Sub"></div>
+        <div id="Page-Content"></div>
+      </div>
+    </div>
+    <!-- layouts -->
+    <div id="Dev">
+      <h1>Developer Reference</h1>
+      <div id="Page-Home">
+        <h1>Home</h1>
+      </div>
+      <div id="Page-Products">
+        <h1>Product list</h1>
+        <input id="Search-Products_" placeholder="Search this list">
+        Filters
+        <button class="Button" data-route="products/new">Start new product</button>
+        <div id="Products"></div>
+      </div>
+      <div id="Page-Items">
+        <h1>Items</h1>
+      </div>
+      <div id="Page-Pricing">
+        <h1>Pricing</h1>
+      </div>
+      <div id="Page-Quotes">
+        <h1>Quotes & orders</h1>
+      </div>
+      <div id="Page-Users">
+        <h1>Users</h1>
+      </div>
+      <div id="Page-Tools">
+        <h1>Tools</h1>
+      </div>
+      <div id="Page-Queues">
+        <h1>Queues</h1>
+      </div>
+      <div id="Page-Settings">
+        <h1>Settings</h1>
+      </div>
+      <!-- modules -->
+      <div id="Wizard-Product">
+        <h1 data-placeholder="New product wizard">New product wizard</h1>
+        <ol class="tab-buttons">
+          <li class="active" data-tab="name">Name product</li>
+          <li data-tab="inputs">Add inputs</li>
+          <li data-tab="values">Add values</li>
+          <li data-tab="save">Save product</li>
+        </ol>
+        <div class="tabs">
+          <div class="tab temp-name">
+            <label for="product_name">Product name</label>
+            <input id="product_name_" placeholder="Untitled product">
+            <button class="Button" data-tab="inputs">Add inputs</button>
+          </div>
+          <div class="tab temp-inputs">
+            <p>These are the questions your customers will answer when configuring this product. Start by outlining your product configuration flow with either full questions or short one to three word phrases for each field you can think of right now. You can always add more inputs later. <a href="#">Show me some examples</a></p>
+            <ol>
+              <li><input id="product_input_1_" placeholder="First question or short phrase"></li>
+            </ol>
+            <p>To add another input, press <strong>Enter ↵</strong></p>
+            <button class="Button" data-tab="values">Add values</button>
+          </div>
+          <div class="tab temp-values"></div>
+          <div class="tab temp-save">
+            <h1>Great work!</h1>
+            You configured your first product.
+          </div>
+        </div>
+      </div>
+    </div>
+    <script src="scripts.js"></script>
+  </body>
+</html>

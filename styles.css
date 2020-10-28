@@ -1,0 +1,291 @@
+@import url('https://use.fontawesome.com/releases/v5.15.0/css/all.css');
+
+/* configure one colors */
+
+:root {
+  --color-gray-100: #f0f3f6;
+  --color-gray-500: #779;
+  --color-gray-700: #335;
+  --color-gray-900: #013;
+  --color-primary: #36f;
+  --shadow-elevation-1: 0 2px 4px #0133;
+  --unit-1x: 72px;
+}
+
+/* cascading element styles */
+
+* { box-sizing: border-box; }
+
+body {
+  -webkit-font-smoothing: antialiased;
+  background: var(--color-gray-100);
+  color: var(--color-gray-700);
+  font: 16px/1 'SF Pro Text', -apple-system, BlinkMacSystemFont, sans-serif;
+  margin: 0;
+  overflow: hidden;
+  text-rendering: geometricPrecision;
+}
+
+h1 {
+  color: #013;
+  font-size: 72px;
+  letter-spacing: -.02em;
+  line-height: 1;
+}
+
+h2 {
+  color: var(--color-gray-900);
+  font-size: 32px;
+  line-height: 32px;
+  margin: 24px 0;
+}
+h3 {
+  font-size: 24px;
+  line-height: 24px;
+  margin: 32px 0 16px;
+}
+
+p { margin: 16px 0; }
+
+pre { border-radius: 6px; }
+
+li { margin-bottom: 16px; }
+li strong { color: var(--color-gray-900); }
+
+/* https://www.dannyguo.com/blog/animated-multiline-link-underlines-with-css/ */
+a {
+  background-image: linear-gradient(currentColor, currentColor);
+  background-position: 0% 100%;
+  background-repeat: no-repeat;
+  background-size: 0% 2px;
+  color: var(--color-primary);
+  text-decoration: none;
+  transition: background-size .5s cubic-bezier(.1,1,.3,1);
+}
+a:focus,
+a:hover { background-size: 100% 2px; }
+
+.External::after {
+  content: '↗';
+  margin-left: .2em;
+  vertical-align: middle;
+}
+
+button,
+input {
+  background: #fff;
+  border-radius: 4px;
+  color: inherit;
+  cursor: pointer;
+  font-size: inherit;
+  line-height: inherit;
+  padding: 6px 10px;
+}
+button { border: none; }
+input {
+  border: 1px solid #bcd;
+}
+
+i { pointer-events: none; }
+
+img {
+  max-width: 100%;
+  vertical-align: bottom;
+}
+
+/* layout */
+
+.Center {
+  margin: 0 auto;
+  max-width: 800px;
+}
+
+/* common appearance? */
+
+.Button {
+  align-items: center;
+  background: var(--color-primary);
+  border-radius: 4px;
+  color: #fff;
+  display: inline-flex;
+  font-size: 16px;
+  font-weight: 600;
+  line-height: 24px;
+  padding: 4px 12px;
+}
+.Button i {
+  font-size: 24px;
+  margin-right: 8px;
+}
+.Button:hover { background: #63f; }
+
+.Copyable { position: relative; }
+pre + button {
+  padding: 12px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  width: 44px;
+}
+pre + button:hover { color: #fff; }
+
+.Lede {
+  font-size: 40px;
+  line-height: 1.3;
+}
+
+.Smallcaps {
+  color: #0136;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: .06em;
+  text-transform: uppercase;
+}
+
+/* body > div { padding: 24px; } */
+/* body > div:nth-child(2n + 1) { background: #f0f3f6; }
+body > div:first-child {
+  background: #335;
+  color: #fff;
+} */
+
+@media only screen and (max-width: 767px) {
+  h1 { font-size: 40px; }
+  .Lede { font-size: 30px; }
+}
+
+/* layout = position + space + outline */
+
+#Toolbar-Top {
+  align-items: center;
+  background: #fff;
+  box-shadow: var(--shadow-elevation-1);
+  display: flex;
+  height: 48px;
+  justify-content: space-between;
+  padding: 4px;
+}
+#Logo { padding: 12px; }
+#Logo-Type {
+  letter-spacing: .05em;
+  text-transform: uppercase;
+}
+#Toolbar-Top-Right {
+  align-items: center;
+  display: flex;
+  justify-content: space-between;
+}
+#Search {}
+#Profile {
+  align-items: center;
+  background: none;
+  display: flex;
+  justify-content: space-between;
+  margin-left: 8px;
+  padding: 4px;
+}
+#Profile:hover { background: #fff; }
+#Profile-Image {
+  background-color: var(--color-gray-100);
+  border-radius: 16px;
+  height: 32px;
+  width: 32px;
+}
+#Profile-Name { margin: 0 8px; }
+#Not-Toolbar-Top {
+  display: flex;
+  height: calc(100vh - 48px);
+}
+
+#Nav-Admin-Root {
+  background: #fff;
+  border-right: 1px solid #bcd;
+  display: flex;
+  flex-direction: column;
+}
+.Nav-1x #Nav-Admin-Root {
+  width: var(--unit-1x);
+}
+.Tab-Icon-Label {
+  border-radius: 0;
+  color: var(--color-gray-500);
+  padding: 12px 8px;
+}
+.Tab-Icon-Label i { font-size: 20px; }
+.Tab-Icon-Label:hover,
+.Tab-Icon-Label.selected {
+  border-left: 4px solid currentColor;
+  padding-left: 4px;
+}
+.Tab-Icon-Label:hover { color: var(--color-gray-700); }
+.Tab-Icon-Label.selected { color: var(--color-primary); }
+.Nav-1x .Tab-Icon-Label {
+  align-items: center;
+  display: flex;
+  flex-direction: column;
+  font-size: 13px;
+}
+.Nav-1x .Tab-Icon-Label i { margin-bottom: 4px; }
+
+#Page {
+  overflow-x: hidden;
+  overflow-y: scroll;
+  width: calc(100vw - var(--unit-1x));
+}
+#Nav-Admin-Sub {}
+#Page-Content > div { padding: 24px; }
+
+#Page-Products {}
+#Wizard-Product {}
+#Wizard-Product input {
+  margin: 4px 0;
+  width: 100%;
+}
+#Wizard-Product button { margin-top: 16px; }
+.tabs .tab:nth-child(n+2) { display: none; }
+
+.tab-buttons {
+  display: flex;
+  padding: 0;
+}
+.tab-buttons li {
+  border-bottom: 4px solid #bcd;
+  color: #789;
+  margin: 0 8px 0 24px;
+  padding: 8px;
+}
+.tab-buttons li.active {
+  border-color: currentColor;
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+.temp-types { display: flex; }
+.temp-types > div {
+  color: #789;
+  cursor: pointer;
+  margin-right: 24px;
+}
+.temp-types > .selected {
+  color: var(--color-primary);
+  font-weight: bold;
+}
+
+@media only screen and (min-width: 767px) {
+  #Toolbar-Top {
+    height: 72px;
+    padding: 16px;
+  }
+}
+
+#Dev {
+  background: #fffe;
+  bottom: 0;
+  display: none;
+  left: 0;
+  overflow-y: scroll;
+  padding: 72px;
+  position: absolute;
+  right: 0;
+  top: 0;
+}
