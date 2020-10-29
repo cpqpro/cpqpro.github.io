@@ -28,7 +28,7 @@ body {
 
 h1 {
   color: #013;
-  font-size: 72px;
+  font-size: 40px;
   letter-spacing: -.02em;
   line-height: 1;
 }
@@ -150,7 +150,6 @@ body > div:first-child {
 } */
 
 @media only screen and (max-width: 767px) {
-  h1 { font-size: 40px; }
   .Lede { font-size: 30px; }
 }
 
@@ -251,6 +250,7 @@ body > div:first-child {
 .tab-buttons li {
   border-bottom: 4px solid #bcd;
   color: #789;
+  cursor: pointer;
   margin: 0 8px 0 24px;
   padding: 8px;
 }
@@ -259,6 +259,10 @@ body > div:first-child {
   color: var(--color-primary);
   font-weight: bold;
 }
+.tab-buttons li:not(.active):hover {
+  border-color: currentColor;
+  color: currentColor;
+}
 
 .temp-types { display: flex; }
 .temp-types > div {
@@ -266,10 +270,55 @@ body > div:first-child {
   cursor: pointer;
   margin-right: 24px;
 }
+.temp-types > div:hover { color: currentColor; }
 .temp-types > .selected {
   color: var(--color-primary);
   font-weight: bold;
 }
+
+.temp-values > div {
+  border-top: 1px solid #bcd;
+  display: flex;
+}
+.temp-values > div > div {
+  flex: 1;
+  padding: 16px;
+}
+.temp-preview {
+  background: #fff;
+}
+.temp-option {
+  border: 1px solid #bcd;
+  border-radius: 4px;
+  cursor: pointer;
+  margin-bottom: 4px;
+  padding: 16px;
+}
+.temp-option:hover { border-color: currentColor; }
+.temp-option.selected { border-color: var(--color-primary); }
+
+/* obvi temporary */
+#Products {
+  border-radius: 8px;
+  margin-top: 24px;
+}
+#Products > div {
+  background: #fff;
+  color: var(--color-primary);
+  cursor: pointer;
+  font-weight: bold;
+  padding: 16px;
+}
+#Products > div:hover { background: #fff9; }
+#Products > div:first-child {
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
+}
+#Products > div:last-child {
+  border-bottom-left-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+#Products > div:nth-child(n + 1) { border-top: 1px solid var(--color-gray-100); }
 
 @media only screen and (min-width: 767px) {
   #Toolbar-Top {
