@@ -65,6 +65,7 @@ document.addEventListener('click', e => {
   }
   if (e.target.matches('[data-tab]')) handleTab(e.target.dataset.tab)
   if (e.target.matches('[data-key]')) viewProduct(e.target.dataset.key)
+  if (e.target.matches('.temp-option')) handleOptions(e.target)
 })
 
 let ferry = ''
@@ -86,6 +87,10 @@ document.addEventListener('keyup', e => {
   }
   if (e.target.tagName === 'INPUT') handleInput(e)
   else handleShortcut(e.key)
+})
+
+document.addEventListener('change', e => {
+  document.getElementById('Preview').className = e.target.value
 })
 
 function handleRoute(el) {
@@ -194,7 +199,8 @@ function handleInput(e) {
       obj = p.inputs[s[2] - 1] = {}
     }
     obj.text = t.value
-    renderPreview(t, p.inputs[s[2] - 1])
+    if (document.getElementById('Preview')) renderFullPreview()
+    else renderPreview(t, p.inputs[s[2] - 1])
     if (e.key === 'Enter') {
       const li = document.createElement('li')
       const input = document.createElement('input')
@@ -212,7 +218,7 @@ function handleShortcut(key) {
   if (key === 'Meta') return
   else if (key === 'Escape') escape()
   else if (key === 'd') toggle('Dev')
-  else if (key === 'r') reset()
+  else if (key === 'R') reset()
   else console.warn('Shortcut not recognized')
 }
 
@@ -233,17 +239,58 @@ function nextProduct() {
 
 function listProducts() {
   const list = document.getElementById('Products')
-  history.state.products.forEach(product => {
-    const item = document.createElement('div')
-    item.dataset.key = product.key
-    item.innerHTML = product.name
-    list.appendChild(item)
-  })
+  const ps = history.state.products
+  if (ps) {
+    ps.forEach(product => {
+      const item = document.createElement('div')
+      item.dataset.key = product.key
+      item.innerHTML = product.name
+      list.appendChild(item)
+    })
+  } else list.innerHTML = '<h3>No products, yet!</h3><p>Use the <a href="/products/new" data-route="products/new">Create new product</a> button above.</p>'
 }
 
 function viewProduct(key) {
-  history.state.product = history.state.products[key]
-  alert('Viewing product:'+ history.state.product.name)
+  const route = '/products/view/'+ key
+  let state = history.state
+  let p = state.product = history.state.products[key]
+  history.pushState(state, route, route)
+  update()
+  
+  // custom render()
+  const page = document.getElementById('Page-Content')
+  page.innerHTML = '<div id="Toolbar-Product"><div><h1>'+ history.state.product.name +' <i class="fas fa-edit"></i></h1></div><div><button>Toggle Preview</button><button class="Button">Save changes</button></div></div>'
+  const div = document.createElement('div')
+  div.className = 'temp-product'
+  const table = document.createElement('div')
+  table.className = 'table'
+  const rowp = document.createElement('div')
+  rowp.className = 'row row-p'
+  rowp.innerHTML = '<div class="cell fas fa-file"></div><div class="cell">Page 1</div><div class="cell count">'+ p.inputs.length +' inputs</div><div class="cell action"><i class="fas fa-ellipsis-h"></i></div>'
+  table.appendChild(rowp)
+  p.hasOwnProperty('inputs') && p.inputs.forEach((input, i) => {
+    const rowi = document.createElement('div')
+    rowi.className = 'row row-i'
+    rowi.innerHTML = '<div class="cell fas fa-angle-down"></div><div class="cell ref">1.'+ (i + 1) +'.</div><input class="cell" id="product_input_'+ (i + 1) +'" value="'+ input.text +'"><select class="cell"><option value="radio_modern">Radio (modern)</option><option value="radio_traditional">Radio (traditional)</option><option value="pulldown_menu">Pulldown menu</option></select><i class="fas fa-caret-down"></i><div class="cell count">'+ (input.hasOwnProperty('values') ? input.values.length : 0) +' values</div><div class="cell action"><i class="fas fa-ellipsis-h"></i></div>'
+    table.appendChild(rowi)
+    input.hasOwnProperty('values') && input.values.forEach((value, v) => {
+      const rowv = document.createElement('div')
+      rowv.className = 'row row-v'
+      rowv.innerHTML = '<div class="cell fas fa-bars"></div><div class="cell ref">1.'+ (i + 1) +'.'+ (v + 1) +'.</div><input class="cell" id="product_input_'+ (i + 1) +'_value_'+ (v + 1) +'" value="'+ value.text +'"><div class="cell action"><i class="fas fa-image"></i></div><div class="cell action"><i class="fas fa-paperclip"></i></div><div class="cell action"><i class="fas fa-ellipsis-h"></i></div>'
+      table.appendChild(rowv)
+    })
+  })
+  const actions = document.createElement('div')
+  actions.className = 'row row-a'
+  actions.innerHTML = '<div class="cell fas fa-angle-right"></div><div class="cell">Insert <i class="fas fa-arrow-right"></i> <button><i class="fas fa-file"></i> Page</button><button><i class="fas fa-layer-group"></i> Section</button><button disabled><i class="fas fa-code-branch"></i> Subsection</button>'
+  table.appendChild(actions)
+  div.appendChild(table)
+  const preview = document.createElement('div')
+  preview.id = 'Preview'
+  preview.className = 'radio_modern'
+  div.appendChild(preview)
+  page.appendChild(div)
+  renderFullPreview()
 }
 
 const layers = []
@@ -291,6 +338,45 @@ function renderPreview(el, data) {
     })
   }
   preview.appendChild(frag)
+}
+
+function renderFullPreview() {
+  console.log('Rendering full preview…')
+  const preview = document.getElementById('Preview')
+  preview.innerHTML = ''
+  const p = history.state.product
+  // title
+  const h1 = document.createElement('h1')
+  h1.textContent = p.name
+  preview.appendChild(h1)
+  // inputs
+  p.hasOwnProperty('inputs') && p.inputs.forEach(input => {
+    const div = document.createElement('div')
+    // div.className = input.style?
+    const h3 = document.createElement('h3')
+    h3.innerHTML = input.text
+    div.appendChild(h3)
+    // values
+    input.hasOwnProperty('values') && input.values.forEach((value, i) => {
+      const v = document.createElement('div')
+      v.className = 'temp-option'+ (i ? '' : ' selected')
+      v.innerHTML = value.text
+      div.appendChild(v)
+    })
+    preview.appendChild(div)
+  })
+  // build
+  const button = document.createElement('button')
+  button.className = 'Button'
+  button.textContent = 'Build configuration'
+  preview.appendChild(button)
+}
+
+function handleOptions(el) {
+  // remove .selected from siblings
+  Array.from(el.parentNode.children).forEach(child => child.classList.remove('selected'))
+  // add .selected to clicked element
+  el.classList.add('selected')
 }
 
 // init
